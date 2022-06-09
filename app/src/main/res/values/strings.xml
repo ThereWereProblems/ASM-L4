@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ASM-L4</string>
     <string name="wy_stro">Wyświetl stronę</string>
+    <string name="wy_obrazek">Wyświetl obrazek</string>
 </resources>
