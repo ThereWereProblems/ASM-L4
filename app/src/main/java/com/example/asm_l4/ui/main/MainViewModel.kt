@@ -1,5 +1,7 @@
 package com.example.asm_l4.ui.main
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,11 +13,12 @@ class MainViewModel : ViewModel() {
     val resText: LiveData<String>
         get() = _resText
 
+    lateinit var resImage: Bitmap
 
-
-
+    fun isImageInitialized() = ::resImage.isInitialized
 
     fun setText(s: String?){
         _resText.value = s.toString()
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.asm_l4.ui.main
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,8 @@ import com.example.asm_l4.databinding.MainFragmentBinding
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-
 import java.net.URL
+
 
 class MainFragment : Fragment() {
 
@@ -26,6 +27,8 @@ class MainFragment : Fragment() {
     private lateinit var viewModel: MainViewModel
 
     private lateinit var thiscontext: Context
+
+    private var imageUrl = "https://www.wallpaperbetter.com/wallpaper/35/263/660/volkswagen-passat-cc-car-tuning-gold-city-720P-wallpaper-middle-size.jpg"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +57,10 @@ class MainFragment : Fragment() {
             thiscontext = container.context
         }
 
+        if(viewModel.isImageInitialized()){
+            binding.imageView.setImageBitmap(viewModel.resImage)
+        }
+
         return binding.root
     }
 
@@ -67,7 +74,7 @@ class MainFragment : Fragment() {
     private fun wyswietlObrazek(){
         var ur = binding.editText.text.toString()
         Thread( Runnable {
-            getPage(ur)
+            getImage()
         }).start()
     }
 
@@ -100,7 +107,15 @@ class MainFragment : Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
     }
 
+
+    fun getImage(){
+        var link = URL(imageUrl)
+        viewModel.resImage = BitmapFactory.decodeStream(link.openConnection().getInputStream());
+        getActivity()?.runOnUiThread(Runnable {
+            viewModel.setText("Your website will appear here")
+            binding.imageView.setImageBitmap(viewModel.resImage)
+        })
+    }
 }
